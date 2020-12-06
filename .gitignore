@@ -1,0 +1,8 @@
+# BuildBuddy secrets
+*.pem
+
+/bazel-*
+/external
+/node_modules
+
+/user.bazelrc
