@@ -1,5 +1,9 @@
 load("@npm//@bazel/rollup:index.bzl", "rollup_bundle")
-load("@npm//@bazel/typescript:index.bzl", "ts_devserver", "ts_library")
+load("@npm//@bazel/typescript:index.bzl", "ts_library")
+
+# TODO: remove this internal concatjs_devserver import.
+# This is a workaround for https://github.com/bazelbuild/rules_nodejs/issues/2441
+load("@npm//@bazel/concatjs/devserver:concatjs_devserver.bzl", concatjs_devserver = "concatjs_devserver_macro")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -28,7 +32,7 @@ rollup_bundle(
     ],
 )
 
-ts_devserver(
+concatjs_devserver(
     name = "devserver",
     entry_module = "nodejs_example/app/app",
     port = 8083,
