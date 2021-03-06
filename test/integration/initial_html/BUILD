@@ -13,8 +13,5 @@ ts_library(
 
 jasmine_node_test(
     name = "initial_html_test",
-    deps = [
-        ":lib",
-        "//testing:server",
-    ],
+    deps = [":lib"],
 )
