@@ -1,5 +1,19 @@
 {
   "compilerOptions": {
-    "jsx": "react"
-  }
+    "target": "ES2015",
+    "jsx": "react",
+    "lib": ["ESNext"],
+    "baseUrl": ".",
+    "importHelpers": true,
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "noEmitOnError": true,
+    "moduleResolution": "node",
+    "rootDirs": [".", "bazel-bin"],
+    "paths": {
+      "nodejs_example/*": ["*", "bazel-bin/*"],
+      "*": ["node_modules/*"]
+    }
+  },
+  "exclude": ["bazel-out", "bazel-bin"]
 }
