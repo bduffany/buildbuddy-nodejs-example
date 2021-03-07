@@ -1,4 +1,4 @@
-import * as child_process from "child_process";
+import child_process from "child_process";
 import fetch from "isomorphic-fetch";
 
 const runfiles = require(process.env["BAZEL_NODE_RUNFILES_HELPER"]);
@@ -15,7 +15,7 @@ export type TestServer = {
 
 /** Starts a test server and returns the server instance. */
 export async function runTestServer(): Promise<TestServer> {
-  const serverPath = runfiles.resolve("server/main.sh");
+  const serverPath = runfiles.resolveWorkspaceRelative("server/main.sh");
 
   // Note, PORT=0 tells express to create a server on a random free port.
   //
@@ -24,7 +24,10 @@ export async function runTestServer(): Promise<TestServer> {
   //
   // This approach is preferable to choosing a random free port on our side,
   // because the port may become occupied by the time the server starts.
-  const serverProcess = child_process.spawn(serverPath, { env: { PORT: "0" } });
+  const serverProcess = child_process.spawn(serverPath, {
+    env: { ...process.env, PORT: "0" },
+    cwd: process.env.RUNFILES,
+  });
 
   return new Promise((accept) => {
     let exited = false;
@@ -34,7 +37,7 @@ export async function runTestServer(): Promise<TestServer> {
 
     serverProcess.stdout.on("data", (data: Buffer) => {
       const output = data.toString();
-      const match = output.match(/Listening on .*:(\d+)/);
+      const match = output.match(/Listening on .*?:(\d+)/);
       if (!match) return;
 
       const port = Number(match[1]);
