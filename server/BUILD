@@ -1,9 +1,13 @@
 load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
-load("@npm//@bazel/typescript:index.bzl", "ts_library")
+load("@npm//@bazel/typescript:index.bzl", "ts_project")
 
-ts_library(
+package(default_visibility = ["//visibility:public"])
+
+ts_project(
     name = "server",
     srcs = glob(["*.ts"]),
+    composite = True,
+    tsconfig = "//:tsconfig_node",
     deps = [
         "@npm//@types/express",
         "@npm//@types/node",

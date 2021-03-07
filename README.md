@@ -41,3 +41,8 @@ Run `yarn dev` and then visit http://localhost:8082.
 
 The Web page will automatically refresh whenever you edit any frontend code,
 and the server will automatically restart whenever you edit any server code.
+
+## Running tests
+
+Run `bazel test //...` to run tests. This will run integration tests under the
+`//test` directory.
