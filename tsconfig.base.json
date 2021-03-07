@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
+    "composite": true,
     "esModuleInterop": true,
-    "noImplicitAny": true,
     "rootDirs": [
       ".",
       "bazel-out/darwin-fastbuild/bin",

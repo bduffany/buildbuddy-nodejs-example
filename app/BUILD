@@ -12,7 +12,9 @@ ts_project(
     srcs = [
         "app.tsx",
     ],
-    tsconfig = "//:tsconfig_browser",
+    extends = "//:tsconfig_browser",
+    tsconfig = ":tsconfig.json",
+    validate = False,
     deps = [
         "@npm//@types/react",
         "@npm//@types/react-dom",

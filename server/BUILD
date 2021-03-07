@@ -1,15 +1,12 @@
 load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
 load("@npm//@bazel/typescript:index.bzl", "ts_project")
 
-# tsconfig.node.json is used for anything running on node.
-exports_files(
-    srcs = ["tsconfig.node.json"],
-    visibility = ["//server:__subpackages__"],
-)
+package(default_visibility = ["//visibility:public"])
 
 ts_project(
     name = "server",
     srcs = glob(["*.ts"]),
+    composite = True,
     tsconfig = "//:tsconfig_node",
     deps = [
         "@npm//@types/express",
