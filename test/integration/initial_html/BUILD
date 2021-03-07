@@ -1,12 +1,13 @@
 load("@npm//@bazel/jasmine:index.bzl", "jasmine_node_test")
-load("@npm//@bazel/typescript:index.bzl", "ts_library")
+load("@npm//@bazel/typescript:index.bzl", "ts_project")
 
-ts_library(
+ts_project(
     name = "lib",
     testonly = 1,
     srcs = ["initial_html_test.ts"],
+    tsconfig = "//:tsconfig_node",
     deps = [
-        "//testing:server",
+        "//server/testing",
         "@npm//@types/jasmine",
     ],
 )

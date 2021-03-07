@@ -1,9 +1,10 @@
-load("@npm//@bazel/typescript:index.bzl", "ts_library")
+load("@npm//@bazel/typescript:index.bzl", "ts_project")
 
-ts_library(
-    name = "server",
+ts_project(
+    name = "testing",
     testonly = 1,
-    srcs = ["server.ts"],
+    srcs = ["test_server.ts"],
+    tsconfig = "//:tsconfig_node",
     visibility = ["//test/integration:__subpackages__"],
     deps = [
         "@npm//@types/isomorphic-fetch",

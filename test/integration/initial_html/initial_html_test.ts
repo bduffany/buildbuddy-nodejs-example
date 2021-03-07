@@ -1,4 +1,4 @@
-import { TestServer, runTestServer } from "../../../testing/server";
+import { TestServer, runTestServer } from "../../../server/testing/test_server";
 
 describe("initial html response", () => {
   let server: TestServer;
