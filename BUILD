@@ -2,6 +2,12 @@ load("@npm//@bazel/typescript:index.bzl", "ts_config")
 
 package(default_visibility = ["//visibility:public"])
 
+exports_files(
+    srcs = [
+        ".swcrc",
+    ],
+)
+
 # tsconfig_browser is used as the tsconfig for any TS code that
 # runs in the browser when compiled.
 ts_config(

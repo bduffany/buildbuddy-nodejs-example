@@ -1,15 +1,17 @@
 load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
-load("//:defs.bzl", "ts_project")
+load("//:defs.bzl", "ts_node_project")
 
 package(default_visibility = ["//visibility:public"])
 
-ts_project(
+ts_node_project(
     name = "lib",
     srcs = glob(["*.ts"]),
     deps = [
+        "@npm//@types/cors",
         "@npm//@types/express",
         "@npm//@types/node",
-        "@npm//arg",
+        "@npm//chalk",
+        "@npm//cors",
         "@npm//express",
         "@npm//tslib",
     ],
@@ -23,4 +25,12 @@ nodejs_binary(
         "//static",
     ],
     entry_point = ":main.ts",
+    env = select({
+        "//:fastbuild": {"NODE_ENV": "development"},
+        "//conditions:default": {"NODE_ENV": "production"},
+    }),
+    tags = [
+        "ibazel_live_reload",
+        "ibazel_notify_changes",
+    ],
 )

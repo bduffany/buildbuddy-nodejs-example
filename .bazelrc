@@ -1,11 +1,12 @@
+# Upload Bazel build events to BuildBuddy
 build --bes_results_url=https://app.buildbuddy.io/invocation/
-build --bes_backend=grpcs://cloud.buildbuddy.io
+build --bes_backend=remote.buildbuddy.io
 # Let build events be uploaded to BuildBuddy in the background
 build --bes_upload_mode=fully_async
 
-build:ci --build_metadata=ROLE=CI
+# enable_runfiles is needed for rules_nodejs.
+build --enable_runfiles
+
 build:ci --build_metadata=VISIBILITY=PUBLIC
-build:ci --tls_client_certificate=buildbuddy-cert.pem
-build:ci --tls_client_key=buildbuddy-key.pem
 
 try-import %workspace%/user.bazelrc

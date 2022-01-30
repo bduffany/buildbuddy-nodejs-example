@@ -1,15 +1,30 @@
 load("@npm//@bazel/typescript:index.bzl", _ts_project = "ts_project")
 load("@npm//@bazel/jasmine:index.bzl", "jasmine_node_test")
+load("@npm//@bazel/esbuild:index.bzl", "esbuild")
+load("@aspect_rules_swc//swc:swc.bzl", "swc_rule")
 
-def ts_project(tsconfig = "//:tsconfig_browser", **kwargs):
+def _ts_base_project(**kwargs):
     _ts_project(
-        tsconfig = tsconfig,
         composite = True,
         **kwargs
     )
 
+def _swc(name, swcrc = "//:.swcrc", **kwargs):
+    swc_rule(
+        name = name,
+        swcrc = swcrc,
+        **kwargs
+    )
+
+def ts_project(tsconfig = "//:tsconfig_browser", **kwargs):
+    _ts_base_project(
+        tsconfig = tsconfig,
+        transpiler = _swc,
+        **kwargs
+    )
+
 def ts_node_project(tsconfig = "//:tsconfig_node", **kwargs):
-    ts_project(
+    _ts_base_project(
         tsconfig = tsconfig,
         **kwargs
     )

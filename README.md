@@ -5,42 +5,59 @@ built with Bazel and [BuildBuddy](https://buildbuddy.io).
 
 ## Technologies used
 
-- [x] **Bazel**: Build system built and maintained by Google that enables **fast**
-      and **correct** builds
+- [x] **Bazel**: Build system built and maintained by Google that enables
+      **fast** and **correct** builds
 
-- [x] **BuildBuddy**: Makes Bazel _even faster_ for large, complex
-      projects by allowing cached artifacts to be shared across developer
-      machines (remote cache), and enabling massively parallel remote build
-      execution. Also provides a Web UI to view your build logs, details,
-      timing profile, and much more.
+- [x] **BuildBuddy**: Makes Bazel even faster and more useful:
+
+  - Allows cached artifacts to be shared across developer machines (remote
+    Bazel cache)
+  - Enables massively parallel remote build execution, by running build
+    actions in the cloud instead of locally
+  - Provides a Web UI to view and share your build logs, details, timing profile, and much more.
+  - Automatically runs Bazel tests and reports the results to GitHub,
+    so that branches can only be merged if tests pass.
 
 - [x] **rules_nodejs**: Bazel rules for frontend projects.
 
-- [x] **TypeScript**, **React**, **esbuild**, **Node.js**, **express**:
-      popular technology choices for building modern Web apps.
+- [x] **TypeScript**: A language that extends JavaScript with types.
+
+- [x] **React**: A popular frontend framework for building modern Web apps.
+
+- [x] **nodejs**: Allows building server-side apps with JavaScript. In
+      this example, the backend is also written in TypeScript.
+
+- [x] **swc**: Used to transpile TypeScript to JavaScript. By default,
+      the `ts_project` rule will use `tsc` to transpile TS to JS, but this
+      project includes a macro in `//:defs.bzl` to use SWC instead. SWC
+      is much faster than `tsc` but does not do type checking. Instead, type
+      checking happens when running `bazel test //...`, via auto-generated
+      `_typecheck_test` rules. See https://blog.aspect.dev/typescript-speedup
+
+- [x] **esbuild**: Use to bundle and minify the resulting JS.
 
 ## How to use this template
 
+Make sure you have `git` and `bazel` installed. Then:
+
 1.  Make a copy of this repo (with `git clone`)
 
-2.  Set up GitHub secrets for your BuildBuddy organization following
-    the [GitHub secrets for BuildBuddy](https://www.buildbuddy.io/docs/rbe-github-actions#github-secrets)
-    section of the RBE guide. This will enable CI builds to run _privately_
-    within your BuildBuddy organization. For this example repo, CI builds will
-    fail until you set up these secrets.
+2.  Push your repo to GitHub (using your account or GitHub org).
 
-3.  If you want commit statuses to appear in the GitHub UI (e.g. the green checkmark
-    at the top of this repo page), be sure to link your BuildBuddy account to GitHub;
-    see https://app.buildbuddy.io/settings/.
+3.  Link your newly cloned repo to BuildBuddy: https://app.buildbuddy.io/workflows/
+
+4.  Now, BuildBuddy will run all tests (`bazel test //...`) on each push
+    or pull request commit!
+
+5.  Highly recommended: set up branch protection rules to prevent code
+    from being merged if it doesn't pass all tests.
 
 ## Running the server locally
 
-Run `yarn dev` and then visit http://localhost:8082.
-
-The Web page will automatically refresh whenever you edit any frontend code,
-and the server will automatically restart whenever you edit any server code.
+Run `yarn dev` and then visit http://localhost:8082. If you make changes
+to the app, the app will automatically be re-built, and any open pages will
+be reloaded in the browser. This is done using [ibazel](https://github.com/bazelbuild/bazel-watcher).
 
 ## Running tests
 
-Run `bazel test //...` to run tests. This will run integration tests under the
-`//test` directory.
+Run `bazel test //...` to run tests.
