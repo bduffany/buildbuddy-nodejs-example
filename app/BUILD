@@ -1,9 +1,5 @@
-load("@npm//@bazel/rollup:index.bzl", "rollup_bundle")
-load("@npm//@bazel/typescript:index.bzl", "ts_project")
-
-# TODO: remove this internal concatjs_devserver import.
-# This is a workaround for https://github.com/bazelbuild/rules_nodejs/issues/2441
-load("@npm//@bazel/concatjs/devserver:concatjs_devserver.bzl", concatjs_devserver = "concatjs_devserver_macro")
+load("//:defs.bzl", "ts_project")
+load("@npm//@bazel/esbuild:index.bzl", "esbuild")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -12,9 +8,6 @@ ts_project(
     srcs = [
         "app.tsx",
     ],
-    extends = "//:tsconfig_browser",
-    tsconfig = ":tsconfig.json",
-    validate = False,
     deps = [
         "@npm//@types/react",
         "@npm//@types/react-dom",
@@ -24,34 +17,24 @@ ts_project(
     ],
 )
 
-rollup_bundle(
+esbuild(
     name = "app_bundle",
-    config_file = "rollup.config.js",
-    entry_point = ":app.tsx",
+    args = {
+        "resolveExtensions": [
+            ".mjs",
+            ".js",
+        ],
+    },
+    define = select({
+        "//:fastbuild": {"process.env.NODE_ENV": '"development"'},
+        "//conditions:default": {"process.env.NODE_ENV": '"production"'},
+    }),
+    entry_points = ["app.tsx"],
+    minify = select({
+        "//:fastbuild": False,
+        "//conditions:default": True,
+    }),
     deps = [
         ":app",
-        "@npm//events",
-        "@npm//rollup-plugin-commonjs",
-        "@npm//rollup-plugin-node-resolve",
-        "@npm//rollup-plugin-replace",
     ],
-)
-
-concatjs_devserver(
-    name = "devserver",
-    entry_module = "nodejs_example/app/app",
-    port = 8083,
-    deps = [
-        ":app",
-        ":umd_modules_for_devserver",
-    ],
-)
-
-filegroup(
-    name = "umd_modules_for_devserver",
-    srcs = [
-        "@npm//react:react__umd",
-        "@npm//react-dom:react-dom__umd",
-    ],
-    visibility = ["//visibility:private"],
 )

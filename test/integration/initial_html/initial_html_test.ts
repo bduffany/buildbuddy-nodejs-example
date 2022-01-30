@@ -1,7 +1,7 @@
 import { TestServer, runTestServer } from "../../../server/testing/test_server";
 
 describe("initial html response", () => {
-  let server: TestServer;
+  let server: TestServer | null;
   afterEach(() => {
     server?.shutDown();
     server = null;

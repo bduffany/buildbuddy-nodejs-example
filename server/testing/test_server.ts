@@ -1,21 +1,23 @@
 import child_process from "child_process";
 import fetch from "isomorphic-fetch";
 
-const runfiles = require(process.env["BAZEL_NODE_RUNFILES_HELPER"]);
+const runfiles = require(process.env["BAZEL_NODE_RUNFILES_HELPER"]!);
 
 /** TestServer is an instance of the server binary for use in a single test case. */
-export type TestServer = {
+export interface TestServer {
   /** The port that the server instance is listening to. */
   readonly port: number;
+
   /** Utility function to get a resource from the server by URL path. */
   get(path?: string): ReturnType<typeof fetch>;
+
   /** Shuts down the test server instance. */
   shutDown(): Promise<void>;
-};
+}
 
 /** Starts a test server and returns the server instance. */
 export async function runTestServer(): Promise<TestServer> {
-  const serverPath = runfiles.resolveWorkspaceRelative("server/main.sh");
+  const serverPath = runfiles.resolveWorkspaceRelative("server/server.sh");
 
   // Note, PORT=0 tells express to create a server on a random free port.
   //
@@ -44,12 +46,14 @@ export async function runTestServer(): Promise<TestServer> {
 
       accept({
         port,
+
         get: (path: string = "/") => {
           if (!path.startsWith("/")) path = `/${path}`;
           return fetch(`http://localhost:${port}${path}`);
         },
+
         shutDown: () => {
-          if (exited) return;
+          if (exited) return Promise.resolve();
 
           return new Promise((accept) => {
             serverProcess.on("exit", accept);

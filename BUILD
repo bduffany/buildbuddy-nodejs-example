@@ -17,3 +17,8 @@ ts_config(
     src = "tsconfig.node.json",
     deps = ["tsconfig.base.json"],
 )
+
+config_setting(
+    name = "fastbuild",
+    values = {"compilation_mode": "fastbuild"},
+)

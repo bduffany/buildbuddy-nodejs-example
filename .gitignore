@@ -1,8 +1,12 @@
 # BuildBuddy secrets
 *.pem
 
+# Bazel-generated symlinks to build output directories
 /bazel-*
-/external
-/node_modules
-
+# User-specific bazelrc
 /user.bazelrc
+
+# Vendored node_modules
+/node_modules
+# Yarn error log
+/yarn-error.log
