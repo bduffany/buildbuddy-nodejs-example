@@ -44,12 +44,10 @@ Make sure you have `git` and `bazel` installed. Then:
 
 2.  Push your repo to GitHub (using your account or GitHub org).
 
-3.  Link your newly cloned repo to BuildBuddy: https://app.buildbuddy.io/workflows/
+3.  Set up BuildBuddy CI, so that BuildBuddy runs all tests on each
+    push or pull request commit: https://app.buildbuddy.io/workflows/
 
-4.  Now, BuildBuddy will run all tests (`bazel test //...`) on each push
-    or pull request commit!
-
-5.  Highly recommended: set up branch protection rules to prevent code
+4.  Highly recommended: set up branch protection rules to prevent code
     from being merged if it doesn't pass all tests.
 
 ## Running the server locally
