@@ -1,13 +1,10 @@
 {
   "compilerOptions": {
     "composite": true,
-    // Type checking
     "strict": true,
     "noImplicitAny": true,
-    // Module behavior
     "esModuleInterop": true,
     "isolatedModules": true,
-    // Path resolution
     "baseUrl": ".",
     "paths": {
       "*": [
