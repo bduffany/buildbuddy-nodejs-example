@@ -10,17 +10,14 @@ built with Bazel and [BuildBuddy](https://buildbuddy.io).
 
 - [x] **BuildBuddy**: Makes Bazel _even faster_ for large, complex
       projects by allowing cached artifacts to be shared across developer
-      machines (remote cache), and enabling massively parallel build
-      execution. Also provides a nice UI for your builds so you can
-      navigate build logs easily and visualize where all the time is being
-      spent in your build.
+      machines (remote cache), and enabling massively parallel remote build
+      execution. Also provides a Web UI to view your build logs, details,
+      timing profile, and much more.
 
-- [x] **rules_nodejs**: Bazel rules for frontend projects. Includes a working setup of
-      **ts_devserver** which allows you to make changes to your frontend code and see
-      the changes immediately in your browser.
+- [x] **rules_nodejs**: Bazel rules for frontend projects.
 
 - [x] **TypeScript**, **React**, **esbuild**, **Node.js**, **express**:
-      popular technology choices for building modern Web apps, each with a rich community.
+      popular technology choices for building modern Web apps.
 
 ## How to use this template
 
