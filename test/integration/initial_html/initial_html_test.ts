@@ -13,6 +13,6 @@ describe("initial html response", () => {
     const bodyText = await response.text();
 
     expect(response.status).toBe(200);
-    expect(bodyText).toContain(`<script async src="/app.js"></script>`);
+    expect(bodyText).toContain(`<script async src="app.js"></script>`);
   });
 });
