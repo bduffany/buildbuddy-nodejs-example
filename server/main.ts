@@ -57,6 +57,6 @@ const hostname = process.env.HOSTNAME || "0.0.0.0";
 const server = app.listen(port, hostname, () => {
   const addressInfo = server.address()!;
   const addrString = typeof addressInfo === "string" ? addressInfo : `${addressInfo.address}:${addressInfo.port}`;
-  log(`Listening on http://${addrString}`);
+  log(`Listening on ${addrString}`);
   log(chalk.green(`You can now visit the app at http://localhost:${port}`));
 });
