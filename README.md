@@ -34,7 +34,7 @@ built with Bazel and [BuildBuddy](https://buildbuddy.io).
       checking happens when running `bazel test //...`, via auto-generated
       `_typecheck_test` rules. See https://blog.aspect.dev/typescript-speedup
 
-- [x] **esbuild**: Use to bundle and minify the resulting JS.
+- [x] **esbuild**: Used to bundle and minify the resulting JS.
 
 ## How to use this template
 
