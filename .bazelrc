@@ -3,6 +3,10 @@ build --bes_results_url=https://app.buildbuddy.io/invocation/
 build --bes_backend=remote.buildbuddy.io
 # Let build events be uploaded to BuildBuddy in the background
 build --bes_upload_mode=fully_async
+# Use buildbuddy remote cache
+build --remote_cache=remote.buildbuddy.io
+build --remote_upload_local_results
+build --experimental_remote_cache_compression
 
 # enable_runfiles is needed for rules_nodejs.
 build --enable_runfiles
