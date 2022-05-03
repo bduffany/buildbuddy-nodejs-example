@@ -8,12 +8,11 @@ exports_files(
     ],
 )
 
-# tsconfig_browser is used as the tsconfig for any TS code that
+# tsconfig is used as the tsconfig for any TS code that
 # runs in the browser when compiled.
 ts_config(
-    name = "tsconfig_browser",
-    src = "tsconfig.browser.json",
-    deps = ["tsconfig.base.json"],
+    name = "tsconfig",
+    src = "tsconfig.json",
 )
 
 # tsconfig_node is used as the tsconfig for any TS code that
@@ -21,7 +20,6 @@ ts_config(
 ts_config(
     name = "tsconfig_node",
     src = "tsconfig.node.json",
-    deps = ["tsconfig.base.json"],
 )
 
 config_setting(

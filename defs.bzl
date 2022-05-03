@@ -3,8 +3,10 @@ load("@npm//@bazel/jasmine:index.bzl", "jasmine_node_test")
 load("@npm//@bazel/esbuild:index.bzl", "esbuild")
 load("@aspect_rules_swc//swc:swc.bzl", "swc_transpiler")
 
-def _ts_base_project(**kwargs):
+def _ts_base_project(name, srcs, **kwargs):
     _ts_project(
+        name = name,
+        srcs = srcs,
         composite = True,
         **kwargs
     )
@@ -16,7 +18,7 @@ def _swc(name, swcrc = "//:.swcrc", **kwargs):
         **kwargs
     )
 
-def ts_project(tsconfig = "//:tsconfig_browser", **kwargs):
+def ts_project(tsconfig = "//:tsconfig", **kwargs):
     _ts_base_project(
         tsconfig = tsconfig,
         transpiler = _swc,

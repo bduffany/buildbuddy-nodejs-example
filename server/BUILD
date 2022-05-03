@@ -7,8 +7,10 @@ ts_node_project(
     name = "lib",
     srcs = glob(["*.ts"]),
     deps = [
+        "//proto:greeting_node_proto",
         "@npm//@types/cors",
         "@npm//@types/express",
+        "@npm//@types/google-protobuf",
         "@npm//@types/node",
         "@npm//chalk",
         "@npm//cors",
